@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -65,3 +66,72 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Doctora</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="estilos/login.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Iniciar sesión</h2>
+    <div class="error" id="errorMsg"></div>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Correo electrónico" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+
+  <script>
+    fetch("http://aeromexico196643.atwebpages.com/mercancias/app.json")
+
+    const obrasDeArte = [
+      { id: "1", ThumbnailUrl: "http://aeromexico.rf.gd/img/006_f2.png" },
+      { id: "2", ThumbnailUrl: "http://aeromexico.rf.gd/img/013.png" },
+      { id: "3", ThumbnailUrl: "http://aeromexico.rf.gd/img/024.png" },
+      { id: "4", ThumbnailUrl: "http://aeromexico.rf.gd/img/026_f2.png" },
+      { id: "5", ThumbnailUrl: "http://aeromexico.rf.gd/img/094_f2.png" },
+      { id: "6", ThumbnailUrl: "http://aeromexico.rf.gd/img/102.png" },
+      { id: "7", ThumbnailUrl: "http://aeromexico.rf.gd/img/184.png" },
+      { id: "8", ThumbnailUrl: "http://aeromexico.rf.gd/img/319.png" },
+      { id: "9", ThumbnailUrl: "http://aeromexico.rf.gd/img/480.png" },
+      { id: "10", ThumbnailUrl: "http://aeromexico.rf.gd/img/495.png" },
+      { id: "11", ThumbnailUrl: "http://aeromexico.rf.gd/img/635.png" },
+      { id: "12", ThumbnailUrl: "http://aeromexico.rf.gd/img/694.png" },
+      { id: "13", ThumbnailUrl: "http://aeromexico.rf.gd/img/788.png" }
+    ];
+
+    // Establecer imagen aleatoria al cargar
+    window.onload = () => {
+      const obraAleatoria = obrasDeArte[Math.floor(Math.random() * obrasDeArte.length)];
+      document.body.style.backgroundImage = `url(${obraAleatoria.imagen})`;
+    };
+
+    // Login simple
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      const correoDoctora = "doctora@email.com"; //  correo real
+
+      if (email !== correoDoctora) {
+        errorMsg.textContent = "Acceso denegado: este acceso es exclusivo para la doctora.";
+        return;
+      }
+
+      window.location.href = "panel/panel.html"; // Redirige al panel de control
+    });
+  </script>
+
+</body>
+</html>
+>>>>>>> 3d0099041fca6e6bb42cc3f3054301bb8010572f
