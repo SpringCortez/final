@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio | Nombre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="estilos/recursos.css">
+</head>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Nombre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="sobremi.html">Sobre mí</a></li>
+      <li><a href="recursos.html">Recursos</a></li>
+      <li><a href="citas.html">Citas</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="login.html">Admin</a></li>
+    </ul>
+    <div class="menu-hamburguesa" id="menu-menu-hamburguesa">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+</header>
+<body>
+  <nav class="subnav-recursos">
+    <ul>
+      <li><a href="#recetarios">Recetarios</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#otros">Otros</a></li>
+    </ul>
+  </nav>
+  <section class="recursos-container">
+
+    <section id="recetarios" class="recurso-seccion">
+      <h2>Recetarios</h2>
+    
+      <div class="recurso receta">
+        <div class="recurso-texto">
+          <h3>Ensalada de Quinoa</h3>
+          <button class="toggle-receta">Ver receta</button>
+        </div>
+        <div class="receta-detalle">
+          <p>Quinoa cocida, pepino, jitomate, limón y aceite de oliva. Servir frío.</p>
+        </div>
+        <div class="recurso-imagen">
+          <img src="imagenes/ensalada.jpg" alt="Ensalada de Quinoa">
+        </div>
+      </div>
+    
+      <div class="recurso receta">
+        <div class="recurso-texto">
+          <h3>Sopa azteca</h3>
+          <br><button class="toggle-receta">Ver receta</button>
+        </div>
+        <div class="receta-detalle">
+          <p>Papas, zanahorias, apio y especias cocidas en caldo vegetal. Ideal para noches frías.</p>
+        </div>
+        <div class="recurso-imagen">
+          <img src="img/5.svg" alt="Sopa de verduras">
+        </div>
+      </div>
+    
+      <div class="recurso receta">
+        <div class="recurso-texto">
+          <h3>Tostadas de Aguacate</h3>
+          <button class="toggle-receta">Ver receta</button>
+        </div>
+        <div class="receta-detalle">
+          <p>Pan tostado con aguacate, tomate y semillas de chía. Perfecto para desayuno.</p>
+        </div>
+        <div class="recurso-imagen">
+          <img src="img/6.svg" alt="Tostadas de aguacate">
+        </div>
+      </div>
+    </section>
+    
+<!-- Tips -->
+<section id="tips" class="recurso-seccion">
+  <h2>Tips de Alimentación</h2>
+
+  <div class="recurso tip">
+    <div class="recurso-texto">
+      <h3>Hidratación constante</h3>
+      <p>Beber al menos 8 vasos de agua al día mejora tu digestión y concentración.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="img/1.svg" alt="Hidratación">
+    </div>
+  </div>
+
+  <div class="recurso tip">
+    <div class="recurso-texto">
+      <h3>Come frutas y verduras</h3>
+      <p>Intenta incluir al menos 5 porciones diarias de frutas y verduras en tus comidas.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="img/2.svg" alt="Frutas y verduras">
+    </div>
+  </div>
+
+  <div class="recurso tip">
+    <div class="recurso-texto">
+      <h3>Evita los ultraprocesados</h3>
+      <p>Prefiere alimentos frescos sobre snacks empacados con exceso de azúcares y grasas.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="img/3.svg" alt="Ultraprocesados">
+    </div>
+  </div>
+</section>
+
+<!-- Otros recursos -->
+<section id="otros" class="recurso-seccion">
+  <h2>Otros Recursos</h2>
+
+  <div class="recurso otro">
+    <div class="recurso-texto">
+      <h3>Infusión de jengibre</h3>
+      <p>Ayuda a la digestión y puede apoyar la pérdida de peso. Ideal como bebida matutina.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="imagenes/jengibre.jpg" alt="Infusión de jengibre">
+    </div>
+  </div>
+
+  <div class="recurso otro">
+    <div class="recurso-texto">
+      <h3>Tisana relajante</h3>
+      <p>Mezcla de hierbas como manzanilla y lavanda, ideal para descansar por la noche.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="imagenes/tisana.jpg" alt="Tisana">
+    </div>
+  </div>
+
+  <div class="recurso otro">
+    <div class="recurso-texto">
+      <h3>Guía de mercado saludable</h3>
+      <p>Descubre cómo hacer compras más conscientes y económicas.</p>
+    </div>
+    <div class="recurso-imagen">
+      <img src="imagenes/mercado.jpg" alt="Guía de mercado saludable">
+    </div>
+  </div>
+</section>
+
+</body>
+
+
+<footer class="footer">
+    <div class="footer-contenido">
+      <p>&copy; 2025 Dra. [Nombre]. Todos los derechos reservados.</p>
+      <div class="footer-redes">
+        <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://wa.me/5210000000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+<script src="js/recursos.js"></script>
+</html>

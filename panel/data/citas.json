@@ -1,0 +1,21 @@
+[
+  {
+    "nombre": "Juan Pérez",
+    "fecha": "2025-05-03",
+    "hora": "10:30",
+    "motivo": "Consulta general"
+  },
+  {
+    "nombre": "Laura Gómez",
+    "fecha": "2025-05-04",
+    "hora": "12:00",
+    "motivo": "Control de presión"
+  },
+  {
+    "nombre": "Carlos Díaz",
+    "fecha": "2025-05-05",
+    "hora": "09:00",
+    "motivo": "Chequeo anual"
+  }
+]
+  

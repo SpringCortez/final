@@ -1,0 +1,248 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+    header {
+    justify-content: space-between; /* Nombre a la izquierda, menú a la derecha */
+    align-items: center; /* Centrado vertical */
+    padding: 0 20px; /* Espaciado a los lados */
+    background-color: #f0fff0; /* O el color que uses */
+    height: 60px; /* Altura del header */
+  }
+  
+  .nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+    
+  .nav .logo {
+    width: 100%;
+    font-size: 1.5rem;
+    left: 150px;
+    font-weight: bold;
+    color: #4CAF50;
+  }
+    
+  .nav-links {
+    list-style: none;
+    padding-left: 1rem;
+    display: flex;
+    width: 50%;
+    gap: 1rem;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    overflow: hidden;
+  }
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* Ajusta según la altura de tu navbar */
+    right: 0;
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    max-height: 500px; 
+    opacity: 1;
+    z-index: 1;
+  }
+    
+  .nav-links li a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+  }
+    
+  .nav-links li a:hover {
+    color: #4CAF50;
+  }
+    
+    /* Botón de menú hamburguesa */
+  .menu-hamburguesa {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 40px;
+    margin-left: auto;
+  }
+  
+  .menu-hamburguesa span {
+    height: 4px;
+    width: 100%;
+    background: #4CAF50;
+    margin: 3px 0;
+    border-radius: 2px;
+  }
+  
+  .menu-hamburguesa.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .menu-hamburguesa.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-hamburguesa.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4fdf6;
+    color: #2d4739;
+  }
+  
+  .sobre-mi-container {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .tarjeta-sobre-mi {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .imagen-perfil {
+    flex: 1 1 300px;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d9f2e3;
+  }
+  
+  .imagen-perfil img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 50%;
+    padding: 1.5rem;
+  }
+  
+  .contenido-sobre-mi {
+    flex: 2 1 400px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .contenido-sobre-mi h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #226644;
+  }
+  
+  .contenido-sobre-mi p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-conocenos {
+    background-color: #2d4739;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 30px;
+    margin-bottom: 1rem;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  
+.btn-conocenos:hover {
+    background-color: #1f3229;
+}
+
+.redes-sociales{
+   display: flex;
+   justify-content: center;
+}
+.redes-sociales a {
+    margin-top: 10px;
+    color: #2d4739;
+    font-size: 1.5rem;
+    margin-right: 3%;
+    transition: color 0.3s;
+}
+  
+.redes-sociales a:hover {
+    color: #1b2e24;
+}
+
+  /***************************/
+
+  .footer {
+    margin-top: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+    
+  .footer-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+    
+  .footer-redes a {
+    margin: 0 0.5rem;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+    
+  .footer-redes i {
+    margin-right: 0.5rem;
+  }
+  @media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        display: flex;
+        background-color: #fff;
+        width: 100%;
+        max-height: 0; /* empieza oculto */
+        opacity: 0;
+        pointer-events: none; /* que no se pueda hacer click */
+      }
+      
+      .nav-links.active {
+        max-height: 500px; /* espacio suficiente para todos los links */
+        opacity: 1;
+        pointer-events: auto;
+      }
+      
+      .menu-hamburguesa {
+        display: flex;
+        position: absolute;
+        right: 20px; /* Ajusta según sea necesario */
+        top: 15px; /* Ajusta según el padding o altura de tu header */
+      }
+    .tarjeta-sobre-mi {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .contenido-sobre-mi {
+      padding: 1.5rem;
+    }
+  
+    .redes-sociales {
+      justify-content: center;
+    }
+  }

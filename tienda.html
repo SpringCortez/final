@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio | Nombre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="estilos/tienda.css">
+</head>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Nombre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="sobremi.html">Sobre mí</a></li>
+      <li><a href="recursos.html">Recursos</a></li>
+      <li><a href="citas.html">Citas</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="login.html">Admin</a></li>
+    </ul>
+    <div class="menu-hamburguesa" id="menu-menu-hamburguesa">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+</header>
+
+<body>
+  <section class="carrusel-container">
+    <h2>Retos populares</h2>
+    <div class="carrusel" id="carrusel">
+      <div class="slide active" style="background-color: #e3f2fd;">
+        <h3>Reto 21 días</h3>
+        <p>Transforma tus hábitos alimenticios en solo 3 semanas.</p>
+      </div>
+      <div class="slide" style="background-color: #fce4ec;">
+        <h3>Reto Detox</h3>
+        <p>Elimina toxinas y renueva tu energía en 7 días.</p>
+      </div>
+      <div class="slide" style="background-color: #e8f5e9;">
+        <h3>Reto sin azúcar</h3>
+        <p>Descubre cómo vivir sin azúcares añadidos por 10 días.</p>
+      </div>
+    </div>
+    <button class="carrusel-btn left" onclick="moverCarrusel(-1)">❮</button>
+    <button class="carrusel-btn right" onclick="moverCarrusel(1)">❯</button>
+  </section>
+
+  <section class="tienda">
+    <h2>Todos los Retos</h2>
+    <div class="productos">
+      <div class="tarjeta-producto">
+        <h3>Reto 21 días</h3>
+        <p>Mejora tu alimentación en solo 3 semanas.</p>
+        <span class="precio">$299 MXN</span>
+        <button onclick="agregarAlCarrito('Reto 21 días', 299)">Agregar al carrito</button>
+      </div>
+      <div class="tarjeta-producto">
+        <h3>Reto Detox</h3>
+        <p>Depura tu cuerpo en una semana.</p>
+        <span class="precio">$199 MXN</span>
+        <button onclick="agregarAlCarrito('Reto Detox', 199)">Agregar al carrito</button>
+      </div>
+      <div class="tarjeta-producto">
+        <h3>Reto sin azúcar</h3>
+        <p>Desintoxícate del azúcar en 10 días.</p>
+        <span class="precio">$249 MXN</span>
+        <button onclick="agregarAlCarrito('Reto sin azúcar', 249)">Agregar al carrito</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Botón para ver carrito -->
+  <button class="ver-carrito" onclick="mostrarCarrito()">🛒 Ver Carrito</button>
+  
+  <!-- Modal o contenedor del carrito -->
+  <div id="carrito" class="modal-carrito hidden">
+    <h3>Carrito de Compras</h3>
+    <ul id="lista-carrito"></ul>
+    <p>Total: $<span id="total">0</span> MXN</p>
+    <button onclick="cerrarCarrito()">Cerrar</button>
+    <a href="checkout.html">checkout</a>
+  </div>
+  
+  
+
+</body>
+
+<footer class="footer">
+    <div class="footer-contenido">
+      <p>&copy; 2025 Dra. [Nombre]. Todos los derechos reservados.</p>
+      <div class="footer-redes">
+        <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://wa.me/5210000000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </footer>
+<script src="js/tienda.js"></script>
+</html>

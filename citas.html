@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio | Nombre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos/citas.css">
+</head>
+
+<header>
+  <nav class="nav">
+    <div class="logo">Nombre</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="sobremi.html">Sobre mí</a></li>
+      <li><a href="recursos.html">Recursos</a></li>
+      <li><a href="citas.html">Citas</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="login.html">Admin</a></li>
+    </ul>
+    <div class="menu-hamburguesa" id="menu-menu-hamburguesa">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+</header>
+
+<body>
+  <h2>Calendario de Citas</h2>
+  <div class="contenedor-flex">
+    <div id="calendar" class="bloque"></div>
+
+    <div id="horarios" class="bloque">
+      <h3 id="fecha-seleccionada">Selecciona un día</h3>
+      <div class="horario-grid" id="contenedor-horarios">
+        <!-- Horarios se generan aquí -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<footer class="footer">
+  <div class="footer-contenido">
+    <p>&copy; 2025 Dra. [Nombre]. Todos los derechos reservados.</p>
+    <div class="footer-redes">
+      <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/5210000000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/citas.js"></script>
+</html>
