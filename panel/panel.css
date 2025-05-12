@@ -224,6 +224,20 @@ header {
   background-color: #0056b3;
 }
 
+.logout-boton {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1em;
+}
+
+.logout-boton:hover {
+  background-color: #c0392b;
+}
+
 
 @media (max-width: 768px) {
   #contenidoPrincipal {

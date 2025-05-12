@@ -1,10 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-
   const secciones = {
     "Citas": document.getElementById("contenidoPrincipal"),
     "Productos": document.getElementById("seccion-productos"),
-    // Aquí puedes agregar más adelante "Configuración"
   };
 
   const menuItems = document.querySelectorAll(".sidebar ul li");
@@ -34,10 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
     autohide: true,
     todayHighlight: true
   });
-
   
-
-  const citasContainer = document.getElementById("citasContainer");
+const citasContainer = document.getElementById("citasContainer");
 const nuevaCitaBtn = document.getElementById("nuevaCitaBtn");
 const citaModal = document.getElementById("citaModal");
 const citaForm = document.getElementById("citaForm");
@@ -62,7 +58,7 @@ function cerrarModal() {
   citaForm.reset();
   editandoIndex = null;
 }
-fetch("./data/citas.json")
+fetch("./php/obtener_citas.php")
   .then(response => response.json())
   .then(data => {
     citas = data;
@@ -135,7 +131,6 @@ citaForm.onsubmit = (e) => {
   } else {
     citas.push(nuevaCita);
   }
-
   cerrarModal();
   renderCitas();
 };
@@ -145,10 +140,47 @@ window.onclick = (e) => {
     cerrarModal();
   }
 };
+document.getElementById("citaForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById("nombre").value;
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
+  const motivo = document.getElementById("motivo").value;
+
+  const creada_por = 1; 
+
+  fetch("../php/crear_citas.php", { //Formulario para guardar citas
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ //Convierte a JSON
+      nombre,
+      fecha,
+      hora,
+      motivo,
+      creada_por
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("Cita guardada exitosamente.");
+      document.getElementById("citaForm").reset();
+      document.getElementById("citaModal").style.display = "none";
+      
+    } else {
+      alert("Error al guardar la cita: " + data.error);
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Error al conectar con el servidor.");
+  });
+});
 
 renderCitas();
-
-
   function marcarDiasConCitas() {
     const fechasConCita = new Set(citas.map(c => c.fecha));
     
@@ -191,15 +223,12 @@ renderCitas();
       });
     }
   });
-
   // Vuelve a marcar los días cada vez que el calendario se muestra
   inputCalendario.addEventListener('show', () => {
     setTimeout(marcarDiasConCitas, 10);
   });
 
   renderProductos();
-
-  
 });
 
 let compras = [
@@ -285,7 +314,6 @@ function eliminarDelCarrito(nombreProducto) {
 }
 
 // FUNCIONES NUEVAS PARA NOTIFICACIÓN
-
 function marcarNuevaNotificacion() {
   document.getElementById("notificacion").style.display = "inline-block";
 }
@@ -300,3 +328,9 @@ setTimeout(() => {
   // Ocultar la notificación automáticamente después de 5 segundos
   setTimeout(limpiarNotificacion, 5000);
 }, 3000);
+document.getElementById("logout-btn").addEventListener("click", () => {
+  // Eliminar datos del login (si usas localStorage o similar)
+  localStorage.removeItem("usuarioLogueado"); // o el nombre que uses
+  // Redirigir al login
+  window.location.href = "../login.html"; // cambia esto si usas otro archivo
+});
