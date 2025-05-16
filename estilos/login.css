@@ -13,11 +13,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
+  background-color: #EFA6A6;
+  font-family: 'Lato', sans-serif; /* Texto general */
 }
 
 .login-container {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #4B0D1A;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -28,6 +29,8 @@ body {
 h2 {
   text-align: center;
   margin-bottom: 1rem;
+  color: #FDF6F0;
+  font-family: 'Raleway', sans-serif; /* Subtítulos */
 }
 
 form {
@@ -45,16 +48,17 @@ input[type="password"] {
 
 button {
   padding: 0.8rem;
-  background-color: #3f8dff;
-  color: white;
+  background-color: #800E2F;
+  color: #FDF6F0;
   border: none;
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  font-family: 'Playfair Display', serif; /* Títulos */
 }
 
 button:hover {
-  background-color: #296fd8;
+  background-color: #BF4D5D;
 }
 
 .error {
