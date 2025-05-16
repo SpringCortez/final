@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const secciones = {
     "Citas": document.getElementById("contenidoPrincipal"),
     "Productos": document.getElementById("seccion-productos"),
-    "Configuración": document.getElementById("seccion-configuracion")
   };
 
   const menuItems = document.querySelectorAll(".sidebar ul li");
@@ -59,7 +58,7 @@ function cerrarModal() {
   citaForm.reset();
   editandoIndex = null;
 }
-fetch("../php/obtener_citas.php")
+fetch("./php/obtener_citas.php")
   .then(response => response.json())
   .then(data => {
     citas = data;
@@ -100,33 +99,13 @@ function renderCitas() {
       renderCitas();
     };
 
-citaDiv.querySelector(".eliminar").onclick = () => {
-  if (confirm("¿Eliminar esta cita?")) {
-    const cita = citas[index];
-    
-    fetch("../php/eliminar_cita.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ id: cita.id })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
+    citaDiv.querySelector(".eliminar").onclick = () => {
+      if (confirm("¿Eliminar esta cita?")) {
         citas.splice(index, 1);
         renderCitas();
-        alert("Cita eliminada correctamente.");
-      } else {
-        alert("Error al eliminar la cita: " + data.error);
       }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error al conectar con el servidor.");
-    });
-  }
-};
+    };
+
     citasContainer.appendChild(citaDiv);
   });
 }
@@ -137,87 +116,69 @@ nuevaCitaBtn.onclick = () => {
 
 cancelarBtn.onclick = cerrarModal;
 
-citaForm.addEventListener("submit", function(e) {
+citaForm.onsubmit = (e) => {
   e.preventDefault();
-
-  const nombre = nombreInput.value;
-  const fecha = fechaInput.value;
-  const hora = horaInput.value;
-  const motivo = motivoInput.value;
+  const nuevaCita = {
+    nombre: nombreInput.value,
+    fecha: fechaInput.value,
+    hora: horaInput.value,
+    motivo: motivoInput.value,
+    hecha: false
+  };
 
   if (editandoIndex !== null) {
-    const cita = citas[editandoIndex];
-
-    fetch("../php/editar_citas.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        id: cita.id,
-        nombre,
-        fecha,
-        hora,
-        motivo,
-        creada_por: 1
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert("Cita editada exitosamente.");
-        citas[editandoIndex] = { ...cita, nombre, fecha, hora, motivo };
-        cerrarModal();
-        renderCitas();
-      } else {
-        alert("Error al editar la cita: " + data.error);
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error al conectar con el servidor.");
-    });
-
+    citas[editandoIndex] = { ...citas[editandoIndex], ...nuevaCita };
   } else {
-    // Crear nueva cita
-    fetch("../php/crear_citas.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        nombre,
-        fecha,
-        hora,
-        motivo,
-        creada_por: 1
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert("Cita guardada exitosamente.");
-        cerrarModal(); 
-        citas.push({ id: data.id, nombre, fecha, hora, motivo, hecha: false });
-        renderCitas();
-      } else {
-        alert("Error al guardar la cita: " + data.error);
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error al conectar con el servidor.");
-    });
+    citas.push(nuevaCita);
   }
-});
-
-
+  cerrarModal();
+  renderCitas();
+};
 
 window.onclick = (e) => {
   if (e.target == citaModal) {
     cerrarModal();
   }
 };
+document.getElementById("citaForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nombre = document.getElementById("nombre").value;
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
+  const motivo = document.getElementById("motivo").value;
+
+  const creada_por = 1; 
+
+  fetch("../php/crear_citas.php", { //Formulario para guardar citas
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ //Convierte a JSON
+      nombre,
+      fecha,
+      hora,
+      motivo,
+      creada_por
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert("Cita guardada exitosamente.");
+      document.getElementById("citaForm").reset();
+      document.getElementById("citaModal").style.display = "none";
+      
+    } else {
+      alert("Error al guardar la cita: " + data.error);
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    alert("Error al conectar con el servidor.");
+  });
+});
 
 renderCitas();
   function marcarDiasConCitas() {
@@ -267,25 +228,13 @@ renderCitas();
     setTimeout(marcarDiasConCitas, 10);
   });
 
-  obtenerComprasDesdeServidor();
   renderProductos();
-  renderConfiguracion();
 });
 
-let compras = [];
-
-function obtenerComprasDesdeServidor() {
-  fetch("../php/obtener_compras.php")
-    .then(res => res.json())
-    .then(data => {
-      compras = data;
-      renderProductos();
-    })
-    .catch(err => {
-      console.error("Error al obtener compras:", err);
-    });
-}
-
+let compras = [
+  { cliente: "Ana Pérez", producto: "Proteína", cantidad: 1, fecha: "2025-05-08", enviado: false },
+  { cliente: "Carlos Díaz", producto: "Vitaminas", cantidad: 2, fecha: "2025-05-07", enviado: true }
+];
 
 function renderProductos() {
   const tbody = document.querySelector("#tabla-compras tbody");
@@ -295,11 +244,11 @@ function renderProductos() {
     const fila = document.createElement("tr");
 
     fila.innerHTML = `
-      <td>${compras.cliente}</td>
-      <td>${compras.producto}</td>
-      <td>${compras.cantidad}</td>
-      <td>${compras.fecha}</td>
-      <td>${compras.enviado ? "✅ Enviado" : "❌ Pendiente"}</td>
+      <td>${compra.cliente}</td>
+      <td>${compra.producto}</td>
+      <td>${compra.cantidad}</td>
+      <td>${compra.fecha}</td>
+      <td>${compra.enviado ? "✅ Enviado" : "❌ Pendiente"}</td>
       <td><button onclick="toggleEnvio(${index})">${compra.enviado ? "Desmarcar" : "Marcar enviado"}</button></td>
     `;
 
@@ -309,72 +258,8 @@ function renderProductos() {
 }
 
 function toggleEnvio(index) {
-  const compra = compras[index];
-  const nuevoEstado = !compra.enviado;
-
-  fetch("../php/actualizar_envio.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      id: compra.id,
-      enviado: nuevoEstado
-    })
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        compras[index].enviado = nuevoEstado;
-        renderProductos();
-      } else {
-        alert("Error al actualizar el estado.");
-      }
-    })
-    .catch(err => {
-      console.error("Error de red:", err);
-    });
-}
-
-function renderConfiguracion() {
-  const contenedor = document.getElementById("seccion-configuracion");
-  contenedor.innerHTML = ""; // Limpiar contenido anterior
-
-  const tarjetas = [
-    {
-      titulo: "Productos",
-      descripcion: "Administra los productos disponibles en la tienda.",
-      botonTexto: "Administrar Productos",
-      onClick: mostrarAdminProductos
-    },
-    {
-      titulo: "Sobre mí",
-      descripcion: "Edita tu información personal y profesional.",
-      botonTexto: "Editar Perfil",
-      onClick: mostrarSobreMi
-    }
-  ];
-
-  tarjetas.forEach(tarjeta => {
-    const div = document.createElement("div");
-    div.className = "tarjeta-configuracion";
-
-    div.innerHTML = `
-      <h3>${tarjeta.titulo}</h3>
-      <p>${tarjeta.descripcion}</p>
-      <button>${tarjeta.botonTexto}</button>
-    `;
-
-    const boton = div.querySelector("button");
-    boton.addEventListener("click", tarjeta.onClick);
-
-    contenedor.appendChild(div);
-  });
-}
-
-function mostrarSobreMi() {
-  document.getElementById("seccion-configuracion").style.display = "none";
-  document.getElementById("seccion-admin-productos").style.display = "none";
-  document.getElementById("seccion-sobre-mi").style.display = "block";
-  obtenerDatosSobreMi();
+  compras[index].enviado = !compras[index].enviado;
+  renderProductos();
 }
 
 function mostrarSeccion(id) {
@@ -382,158 +267,53 @@ function mostrarSeccion(id) {
   document.getElementById(id).style.display = "block";
 }
 
-document.getElementById("btn-configuracion").addEventListener("click", () => {
-  document.getElementById("contenidoPrincipal").style.display = "none";
-  document.getElementById("seccion-productos").style.display = "none";
-  document.getElementById("seccion-configuracion").style.display = "block";
-  document.getElementById("seccion-sobre-mi").style.display = 'none'; // ✔ oculto hasta que se llame mostrarSobreMi
-  renderConfiguracion();
-});
+// FUNCIONES EXISTENTES
 
+function actualizarTablaCompras() {
+  const cuerpoTabla = document.querySelector("#tabla-compras tbody");
+  cuerpoTabla.innerHTML = "";
 
-function mostrarConfiguracion() {
-  document.getElementById("seccion-configuracion").style.display = "block";
-  document.getElementById("seccion-admin-productos").style.display = "none";
-  document.getElementById("seccion-sobre-mi").style.display = "none";
-  obtenerDatosSobreMi();
-}
+  let totalCompra = 0;
 
-function obtenerDatosSobreMi() {
-  fetch("../php/obtener_sobremi.php")
-    .then(response => response.json())
-    .then(data => {
-      console.log("Datos recibidos de sobre mí:", data);
-      const contenedor = document.getElementById("seccion-sobre-mi");
-      contenedor.innerHTML = `
-        <button onclick="mostrarConfiguracion()">⬅ Volver</button>
-        <h2>Editar Perfil</h2>
-        <div class="tarjeta-configuracion">
-          <h3>${data.titulo}</h3>
-          <p>${data.descripcion}</p>
-          <img src="${data.imagen}" alt="Imagen" style="max-width: 200px; display: block; margin-top: 10px;">
-          <button onclick="mostrarFormularioEditarSobreMi(
-          ${data.id},
-          ${JSON.stringify(data.titulo)},
-          ${JSON.stringify(data.descripcion)},
-          ${JSON.stringify(data.imagen)}
-          )">Editar</button>
-        </div>
-      `;
-    })
-    .catch(error => {
-      console.error("Error al obtener los datos:", error);
+  carrito.forEach(producto => {
+    const fila = document.createElement("tr");
+
+    const celdaNombre = document.createElement("td");
+    celdaNombre.textContent = producto.nombre;
+    fila.appendChild(celdaNombre);
+
+    const celdaCantidad = document.createElement("td");
+    celdaCantidad.textContent = producto.cantidad;
+    fila.appendChild(celdaCantidad);
+
+    const celdaSubtotal = document.createElement("td");
+    const subtotal = producto.precio * producto.cantidad;
+    totalCompra += subtotal;
+    celdaSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+    fila.appendChild(celdaSubtotal);
+
+    const celdaEliminar = document.createElement("td");
+    const botonEliminar = document.createElement("button");
+    botonEliminar.textContent = "Eliminar";
+    botonEliminar.addEventListener("click", () => {
+      eliminarDelCarrito(producto.nombre);
     });
-}
+    celdaEliminar.appendChild(botonEliminar);
+    fila.appendChild(celdaEliminar);
 
-function mostrarFormularioEditarSobreMi(id, titulo, descripcion, imagen) {
-  const modal = document.getElementById("modal-sobre-mi");
-  modal.style.display = "block";
-  document.getElementById("id-sobre-mi").value = id;
-  document.getElementById("titulo-sobre-mi").value = titulo;
-  document.getElementById("descripcion-sobre-mi").value = descripcion;
-  document.getElementById("imagen-sobre-mi").src = imagen;
-  
-const form = document.getElementById("form-sobre-mi");
-form.onsubmit = function (e) {
-  e.preventDefault();
-  const formData = new FormData(form);
-
-  fetch("../php/actualizar_sobremi.php", {
-    method: "POST",
-    body: formData
-  })
-    .then(res => res.text())
-    .then(respuesta => {
-      console.log("Respuesta del servidor:", respuesta);
-      document.getElementById("modal-sobre-mi").style.display = "none";
-      obtenerDatosSobreMi();
-    })
-    .catch(err => console.error("Error al actualizar:", err));
-};
-
-}
-
-
-function mostrarAdminProductos() {
-  document.getElementById("seccion-configuracion").style.display = "none";
-  document.getElementById("seccion-sobre-mi").style.display = "none";
-  document.getElementById("seccion-admin-productos").style.display = "block";
-}
-
-function mostrarFormularioProducto() {
-  document.getElementById("formulario-producto").style.display = "block";
-  document.getElementById("productoForm").reset();
-  document.getElementById("producto-id").value = "";
-}
-
-function cancelarFormularioProducto() {
-  document.getElementById("formulario-producto").style.display = "none";
-}
-
-function editarProducto(id) {
-  window.location.href = `../php/editar_producto.php?id=${id}`;
-}
-
-
-function eliminarProducto(id) {
-  if (confirm("¿Seguro que deseas eliminar este producto?")) {
-    window.location.href = `../php/eliminar_producto.php?id=${id}`;
-  }
-}
-
-function filtrarProductos() {
-  const nombreFiltro = document.getElementById('busqueda-nombre').value.toLowerCase();
-  const precioFiltro = document.getElementById('busqueda-precio').value;
-
-  document.querySelectorAll('#seccion-productos tbody tr').forEach((fila) => {
-    const nombre = fila.children[1].textContent.toLowerCase();
-    const precio = fila.children[2].textContent.replace('$', '').trim();
-
-    const coincideNombre = nombre.includes(nombreFiltro);
-    const coincidePrecio = precioFiltro ? parseFloat(precio) === parseFloat(precioFiltro) : true;
-
-    fila.style.display = coincideNombre && coincidePrecio ? '' : 'none';
-  });
-}
-
-function resetearFiltros() {
-  document.getElementById('busqueda-nombre').value = '';
-  document.getElementById('busqueda-precio').value = '';
-  filtrarProductos(); // Vuelve a mostrar todo
-}
-
-function ordenarPorNombre() {
-  ordenarTabla(1, 'string'); // Columna 1 = Nombre
-}
-
-function ordenarPorPrecio() {
-  ordenarTabla(2, 'number'); // Columna 2 = Precio
-}
-
-function ordenarTabla(indiceColumna, tipo) {
-  const tbody = document.querySelector('#seccion-productos tbody');
-  const filas = Array.from(tbody.querySelectorAll('tr'));
-
-  filas.sort((a, b) => {
-    let valA = a.children[indiceColumna].textContent.trim();
-    let valB = b.children[indiceColumna].textContent.trim();
-
-    if (tipo === 'number') {
-      valA = parseFloat(valA.replace('$', ''));
-      valB = parseFloat(valB.replace('$', ''));
-    } else {
-      valA = valA.toLowerCase();
-      valB = valB.toLowerCase();
-    }
-
-    return valA > valB ? 1 : valA < valB ? -1 : 0;
+    cuerpoTabla.appendChild(fila);
   });
 
-  // Vuelve a insertar las filas ordenadas
-  filas.forEach(fila => tbody.appendChild(fila));
+  document.getElementById("total-compra").textContent = totalCompra.toFixed(2);
 }
 
+function eliminarDelCarrito(nombreProducto) {
+  carrito = carrito.filter(producto => producto.nombre !== nombreProducto);
+  actualizarTablaCompras();
+  guardarCarritoEnLocalStorage();
+}
 
+// FUNCIONES NUEVAS PARA NOTIFICACIÓN
 function marcarNuevaNotificacion() {
   document.getElementById("notificacion").style.display = "inline-block";
 }
@@ -541,31 +321,16 @@ function marcarNuevaNotificacion() {
 function limpiarNotificacion() {
   document.getElementById("notificacion").style.display = "none";
 }
+// Simulación de llegada de nueva notificación tras 3 segundos
+setTimeout(() => {
+  marcarNuevaNotificacion();
 
-// Consultar al backend si hay novedades reales
-function verificarNovedades() {
-  fetch("../php/novedades.php")
-    .then(res => res.json())
-    .then(data => {
-      if (data.hayNovedades) {
-        marcarNuevaNotificacion();
-      } else {
-        limpiarNotificacion();
-      }
-    })
-    .catch(err => {
-      console.error("Error al verificar novedades:", err);
-    });
-}
-
-// Llamar una sola vez al cargar
-document.addEventListener("DOMContentLoaded", () => {
-  verificarNovedades();
-});
-
-// Botón logout
+  // Ocultar la notificación automáticamente después de 5 segundos
+  setTimeout(limpiarNotificacion, 5000);
+}, 3000);
 document.getElementById("logout-btn").addEventListener("click", () => {
-  localStorage.removeItem("usuarioLogueado");
-  window.location.href = "../login.html";
+  // Eliminar datos del login (si usas localStorage o similar)
+  localStorage.removeItem("usuarioLogueado"); // o el nombre que uses
+  // Redirigir al login
+  window.location.href = "../login.html"; // cambia esto si usas otro archivo
 });
-

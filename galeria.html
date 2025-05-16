@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería | Nombre</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="estilos/galeria.css">
+  <!-- Para los títulos -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Para los subtítulos -->
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Para el texto general -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav class="nav">
+      <div class="logo">
+  <a href="index.html">
+    <img src="img/logo.png" alt="Logo de la página">
+  </a>
+</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="galeria.html">Galería</a></li>
+      </ul>
+      <div class="menu-hamburguesa">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="galeria">
+      <h1>Mis imágenes destacadas</h1>
+      <div class="galeria-contenedor">
+        <div class="imagen-box">
+          <img src="img/Captura.PNG" alt="Descripción foto 1">
+          <p>Paleta de colores</p>
+        </div>
+        <div class="imagen-box">
+          <img src="img/mapa.jpg" alt="Descripción foto 2">
+          <p>Mapa de navegación</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-contenido">
+      <p>&copy; 2025 Dra. Ileana Cortez. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.querySelector('.menu-hamburguesa');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
