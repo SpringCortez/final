@@ -13,4 +13,6 @@ $stmt = $conexion->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 
-echo "Visibilidad actualizada";
+// Redirigir de vuelta al panel
+header("Location: panel.php");
+exit();

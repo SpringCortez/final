@@ -41,18 +41,20 @@ if ($resultado && $resultado->num_rows > 0) {
 <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.3.4/dist/js/datepicker-full.min.js"></script>
 
 <body>
-  <div class="sidebar">
-    <h2>Panel</h2>
-      <li class="active">Citas</li>
-      <li id="btn-productos">Productos
-        <span id="notificacion" class="notificacion"></span>
-      </li>
-      <li>Configuración</li>
-      <li>
-          <a id="logout-btn" class="logout-boton" href="logout.php">Cerrar sesión</a>
-      </li>
+<div class="sidebar">
+  <h2>Panel</h2>
+  <ul>
+    <li class="active">Citas</li>
+    <li id="btn-productos">Tienda
+      <span id="notificacion" class="notificacion"></span>
+    </li>
+    <li id="btn-configuracion">Configuración</li>
+    <li>
+      <a id="logout-btn" class="logout-boton" href="logout.php">Cerrar sesión</a>
+    </li>
   </ul>
-  </div>
+</div>
+
 
   <div class="main">
     <header>
@@ -69,10 +71,73 @@ if ($resultado && $resultado->num_rows > 0) {
       </div>
     </div>
 
+    <div id="seccion-configuracion" style="display: none;"></div>
+    <div id="seccion-admin-productos" style="display: none;">
+      <h3>Gestión de Productos</h3>
+  <button onclick="mostrarFormularioProducto()">+ Añadir Producto</button>
+  <div id="lista-productos-config">
+    <?php foreach ($productos as $producto): ?>
+      <div class="producto-item">
+        <img src="<?= htmlspecialchars($producto['imagen']) ?>" width="50" alt="Producto">
+        <strong><?= htmlspecialchars($producto['nombre']) ?></strong> - 
+        $<?= number_format($producto['precio'], 2) ?> |
+        Visible: <?= $producto['visible'] ? 'Sí' : 'No' ?>
+        <div class="acciones-producto">
+          <button onclick="editarProducto(<?= $producto['id'] ?>)">Editar</button>
+          <button onclick="eliminarProducto(<?= $producto['id'] ?>)">Eliminar</button>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- Formulario oculto -->
+  <div id="formulario-producto" style="display: none;">
+    <form id="productoForm" action="../php/agregar_producto.php" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" id="producto-id">
+      <label>Nombre:</label>
+      <input type="text" name="nombre" id="producto-nombre" required>
+      <label>Precio:</label>
+      <input type="number" step="0.01" name="precio" id="producto-precio" required>
+      <label>Imagen:</label>
+      <input type="file" name="imagen" id="producto-imagen">
+      <label>Visible:</label>
+      <select name="visible" id="producto-visible">
+        <option value="1">Sí</option>
+        <option value="0">No</option>
+      </select>
+      <button type="submit">Guardar</button>
+      <button type="button" onclick="cancelarFormularioProducto()">Cancelar</button>
+    </form>
+  </div>
+    </div>
+    <div id="seccion-sobre-mi" style="display: none;"></div>
+
+
+<?php
+require_once '../php/conexion.php';
+
+$resultado = $conexion->query("SELECT * FROM productos ORDER BY id DESC");
+$productos = [];
+
+while ($row = $resultado->fetch_assoc()) {
+    $productos[] = $row;
+}
+?>
+
     <!-- Sección de productos (tienda) -->
     <section id="seccion-productos" style="display: none;">
       <h2>Gestión de Productos</h2>
-      <button onclick="location.href='../php/agregar_producto.php'">+ Añadir Producto</button>
+      <button onclick="mostrarFormularioProducto()">+ Añadir Producto</button>
+      <div style="margin: 10px 0;">
+        <input type="text" id="busqueda-nombre" placeholder="Buscar por nombre..." />
+        <input type="number" id="busqueda-precio" placeholder="Precio exacto..." />
+        <button onclick="filtrarProductos()">Buscar</button>
+        <button onclick="resetearFiltros()">Limpiar</button>
+          <div style="margin: 10px 0;">
+          <button onclick="ordenarPorNombre()">Ordenar por Nombre (A-Z)</button>
+          <button onclick="ordenarPorPrecio()">Ordenar por Precio (menor a mayor)</button>
+      </div>
+    </div>
       <table>
         <thead>
           <tr>
@@ -86,38 +151,37 @@ if ($resultado && $resultado->num_rows > 0) {
         <tbody>
           <?php foreach ($productos as $producto): ?>
           <tr>
-            <td><img src="<?= htmlspecialchars($producto['imagen']) ?>" width="50"></td>
+            <td><img src="../img/<?= htmlspecialchars($producto['imagen']) ?>" width="50"></td>
             <td><?= htmlspecialchars($producto['nombre']) ?></td>
             <td>$<?= number_format($producto['precio'], 2) ?></td>
             <td><?= $producto['visible'] ? 'Sí' : 'No' ?></td>
             <td>
-              <a href="editar_producto.php=<?= $producto['id'] ?>">Editar</a> |
+              <a href="editar_producto.php?id=<?= $producto['id'] ?>">Editar</a>
               <a href="eliminar_producto.php?id=<?= $producto['id'] ?>" onclick="return confirm('¿Eliminar este producto?')">Eliminar</a> |
-              <a href="toggle_visibilidad.php?id=<?= $producto['id'] ?>">Cambiar Visibilidad</a>
+              <a href="cambiar_visibilidad.php?id=<?= $producto['id'] ?>">Cambiar Visibilidad</a>
             </td>
           </tr>
           <?php endforeach; ?>
         </tbody>
       </table>
     </section>
-  </div>
-  
-  <!-- Modal de cita -->
+
+    <!-- Modal de cita -->
   <div id="citaModal" class="modal">
     <div class="modal-content">
       <h2 id="modalTitulo">Nueva Cita</h2>
-      <form id="citaForm" action="php/crear_citas.php" method="post"> <!--Si esta guardando en la base de datos, pero no esta pasando la informacion-->
+      <form id="citaForm" action="php/crear_citas.php" method="post">
         <label>Nombre del paciente:</label>
-        <input type="text" id="nombre" required />
+        <input type="text" id="nombre" name="nombre" required />
 
         <label>Fecha:</label>
-        <input type="date" id="fecha" required />
+        <input type="date" id="fecha" name="fecha" required />
 
         <label>Hora:</label>
-        <input type="time" id="hora" required />
+        <input type="time" id="hora"  name="hora" required />
 
         <label>Motivo:</label>
-        <input type="text" id="motivo" required />
+        <input type="text" id="motivo" name="motivo" required />
 
         <div class="form-buttons">
           <button type="submit">Guardar</button>
@@ -128,13 +192,27 @@ if ($resultado && $resultado->num_rows > 0) {
   </div>
 
 
+<div id="modal-sobre-mi" class="modal" style="display: none;">
+  <form id="form-sobre-mi">
+    <input type="hidden" id="id-sobre-mi" name="id">
+    <input type="text" id="titulo-sobre-mi" name="titulo">
+    <textarea id="descripcion-sobre-mi" name="descripcion"></textarea>
+    <img id="imagen-sobre-mi" src="" alt="Imagen actual" style="max-width: 200px;">
+    <input type="file" name="nueva_imagen">
+    <button type="submit">Guardar</button>
+  </form>
+</div>
+
+
   <script>
-    // Muestra/oculta la sección de productos desde la barra lateral
-    document.getElementById('btn-productos').addEventListener('click', function () {
+      document.getElementById('btn-productos').addEventListener('click', function () {
       document.getElementById('contenidoPrincipal').style.display = 'none';
       document.getElementById('seccion-productos').style.display = 'block';
+      document.getElementById("seccion-sobre-mi").style.display = 'block';
+      obtenerDatosSobreMi();
     });
   </script>
+  </div>
 
   <script src="panel.js"></script>
 </body>

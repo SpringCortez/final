@@ -19,6 +19,7 @@
   </div>
 
 <script>
+  
   document.getElementById("loginForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -53,6 +54,19 @@
       }
     });
   });
+
+fetch("www/home/aeromexico196643.atwebpages.com/api/fondos.json")
+  .then(res => res.json())
+  .then(fondos => {
+    const randomIndex = Math.floor(Math.random() * fondos.length);
+    const fondoSeleccionado = fondos[randomIndex].imagen;
+
+    document.body.style.backgroundImage = `url('${fondoSeleccionado}')`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+  })
+  .catch(err => console.error("Error al cargar el JSON:", err));
+
 </script>
 
 

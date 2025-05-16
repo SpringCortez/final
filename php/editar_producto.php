@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
         $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
         $nombreImagen = uniqid() . '.' . $ext;
-        $rutaDestino = 'img/' . $nombreImagen;
+        $rutaDestino = '../img/' . $nombreImagen;
         move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
     }
 
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <textarea name="descripcion" required><?= htmlspecialchars($producto['descripcion']) ?></textarea><br>
 
         <label>Imagen actual:</label><br>
-        <img src="img/<?= htmlspecialchars($producto['imagen']) ?>" alt="Imagen" width="150"><br>
+        <img src="../img/<?= htmlspecialchars($producto['imagen']) ?>" alt="Imagen" width="150"><br>
 
         <label>Nueva imagen (opcional):</label>
         <input type="file" name="imagen"><br>

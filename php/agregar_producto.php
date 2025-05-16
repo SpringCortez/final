@@ -19,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
         $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
         $nombreImagen = uniqid() . '.' . $ext;
-        $rutaDestino = 'img/' . $nombreImagen;
+        $rutaDestino = '../img/' . $nombreImagen;
 
         move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
     }
+    
 
     $stmt = $conexion->prepare("INSERT INTO productos (nombre, precio, descripcion, imagen, visible) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sdssi", $nombre, $precio, $descripcion, $nombreImagen, $visible);
