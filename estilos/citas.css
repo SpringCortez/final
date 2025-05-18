@@ -107,6 +107,37 @@
   color: #2B0B0E;
 }
 
+.verde {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.rojo {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+.boton-confirmar {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+
+
   .contenedor-flex {
     display: flex;
     flex-wrap: wrap;
@@ -162,7 +193,8 @@
   .horario.tomar:hover {
     opacity: 0.9;
   }
-  
+ 
+
   .footer {
     background-color: #800E2F;
     color: white;
