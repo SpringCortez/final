@@ -31,6 +31,5 @@ if ($producto && !empty($producto['imagen'])) {
 $stmt = $conexion->prepare("DELETE FROM productos WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
-
-header("Location: panel.php");
+header("Location: ../panel/panel.php");
 exit();

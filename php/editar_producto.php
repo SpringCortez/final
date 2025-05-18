@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreImagen = $producto['imagen'];
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
         $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
-        $nombreImagen = uniqid() . '.' . $ext;
-        $rutaDestino = 'img/' . $nombreImagen;
+        $nombreImagen = 'img/' . uniqid() . '.' . $ext;
+        $rutaDestino = '../' . $nombreImagen;
         move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
     }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sdssii", $nombre, $precio, $descripcion, $nombreImagen, $visible, $id);
     $stmt->execute();
 
-    header("Location: panel.php");
+    header("Location: ../panel/panel.php");
     exit();
 }
 ?>

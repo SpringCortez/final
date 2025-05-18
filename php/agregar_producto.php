@@ -18,17 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreImagen = null;
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === 0) {
         $ext = pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
-        $nombreImagen = uniqid() . '.' . $ext;
-        $rutaDestino = 'img/' . $nombreImagen;
+        $nombreImagen = 'img/' . uniqid() . '.' . $ext;
+        $rutaDestino = '../' . $nombreImagen;
 
         move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino);
     }
+    
 
     $stmt = $conexion->prepare("INSERT INTO productos (nombre, precio, descripcion, imagen, visible) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sdssi", $nombre, $precio, $descripcion, $nombreImagen, $visible);
 
     if ($stmt->execute()) {
-        header("Location: panel.php");
+        header("Location: ../panel/panel.php");
         exit();
     } else {
         $error = "Error al guardar el producto.";

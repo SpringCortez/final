@@ -18,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['nombre'] = $usuario['nombre'];
             $_SESSION['rol'] = $usuario['rol'];
-            
-            //CREO QUE LA FALLA ESTA AQUI, YA QUE DEBERIA REDIRECCIONAR.
             echo "success";
             exit;
         } else {
