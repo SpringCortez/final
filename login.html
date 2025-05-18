@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VG3CF5BX90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VG3CF5BX90');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login Doctora</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="estilos/login.css">
 </head>
+
+
 <body>
   <div class="login-container">
     <h2>Iniciar sesión</h2>
@@ -47,7 +58,7 @@
     })
     .then(res => res.text())
     .then(data => {
-      if (data.includes("Login correcto")) {
+      if (data.includes("success")) {
         window.location.href = "panel/panel.php";//Aqui deberia redireccionar
       } else {
         errorMsg.textContent = data;
@@ -68,7 +79,5 @@ fetch("www/home/aeromexico196643.atwebpages.com/api/fondos.json")
   .catch(err => console.error("Error al cargar el JSON:", err));
 
 </script>
-
-
 </body>
 </html>

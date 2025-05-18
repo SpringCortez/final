@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VG3CF5BX90"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VG3CF5BX90');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inicio | Nombre</title>
@@ -13,7 +22,6 @@
   <!-- Para el texto general -->
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-
 <header>
   <nav class="nav">
     <div class="logo">
@@ -51,9 +59,13 @@
       <form id="formulario-contacto" action="enviar.php" method="POST" class="formulario-contactos">
         <label for="nombre">Nombre *</label>
         <input type="text" id="nombre" name="nombre" required>
-    
-        <label for="email">Correo electrónico</label>
-        <input type="email" id="email" name="email">
+
+        <label for="fecha">Fecha de cita</label>
+        <input type="date" id="campo-fecha" name="fecha">
+
+        <label for="hora">Hora de cita</label>
+        <input type="time" id="campo-hora" name="hora">
+
 
         <label for="motivo">Motivo *</label>
           <select id="motivo" name="motivo" required>
@@ -69,7 +81,6 @@
         <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
     
         <div class="botones">
-          <button type="submit">Enviar por correo</button>
           <a id="btn-whatsapp" target="_blank">Enviar por WhatsApp</a>
         </div>
       </form>
@@ -78,13 +89,24 @@
   
 <footer class="footer">
     <div class="footer-contenido">
-      <p>&copy; 2025 Dra. [Nombre]. Todos los derechos reservados.</p>
+      <p>&copy; 2025 M. en C. Gabriela Cortez Todos los derechos reservados.</p>
       <div class="footer-redes">
-        <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-        <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://wa.me/5210000000000" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://www.facebook.com/share/1VK692nyZ3/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a href="https://www.instagram.com/i.gabycortez?igsh=MWNsY2tobmcxdHU1Mw==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://wa.me/+526567788927" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
       </div>
     </div>
   </footer>
+  <script>
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const fecha = params.get('fecha');
+  const hora = params.get('hora');
+
+  if (fecha) document.getElementById('campo-fecha').value = fecha;
+  if (hora) document.getElementById('campo-hora').value = hora;
+});
+</script>
+
 <script src="js/contacto.js"></script>
 </html>
